@@ -81,7 +81,26 @@ public class Jugador1 extends javax.swing.JFrame {
 
     /*arguments
      */
-    
+        private void formKeyPressed(java.awt.event.KeyEvent evt) {                                
+        // TODO add your handling code here:
+        
+        
+        if(evt.getKeyCode()== KeyEvent.VK_UP){
+
+        }
+        if(evt.getKeyCode()== KeyEvent.VK_DOWN){
+      
+            
+        }
+        if(evt.getKeyCode()==KeyEvent.VK_LEFT){
+            
+        }
+
+        if(evt.getKeyCode()== KeyEvent.VK_RIGHT){
+
+        }
+        
+}
 
     
     public static void main(String args[]) {
