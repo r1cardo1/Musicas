@@ -11,13 +11,30 @@ import javax.swing.JLabel;
  *
  * @author Ricardo Marcano
  */
-public class Jugador {
+public class Jugador extends javax.swing.JFrame{
     String nombre;
     String apellido;
     int puntos;
     int x;
     int y;
     JLabel bomberman = new JLabel();
+    
+        JLabel[][] mapa = new JLabel[15][15];
+    String mapatext[][] = {{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
+{"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
+{"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
+{"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
+{"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
+{"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
+{"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
+{"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
+{"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
+{"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
+{"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
+{"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
+{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
+{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
+{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"}};
 
     public Jugador(String nombre, String apellido, int x, int y,String color) {
         this.nombre = nombre;
@@ -92,7 +109,18 @@ public class Jugador {
        bomberman.setLocation(x-4,y);
    }
    
-
+public void generarmapa(){
+        JLabel banner = new JLabel();
+        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner.png")));
+        add(banner);
+        banner.setBounds(0,0,647,86);
+        banner.validate();
+        for(int i=0;i<=14;i++)
+            for(int j=0;j<=12;j++){
+                mapa[j][i] = new JLabel();
+                mapa[j][i].setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+mapatext[j][i]+".png")));
+                add(mapa[j][i]);
+            }
    
 }
 
