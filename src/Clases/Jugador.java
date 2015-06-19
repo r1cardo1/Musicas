@@ -18,6 +18,7 @@ public class Jugador extends javax.swing.JFrame{
     int x;
     int y;
     JLabel bomberman = new JLabel();
+    int label;
     
         JLabel[][] mapa = new JLabel[15][15];
     String mapatext[][] = {{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
@@ -43,6 +44,7 @@ public class Jugador extends javax.swing.JFrame{
         this.x = x;
         this.y = y;
         bomberman.setBounds(x,y,43,43);
+        
     }
 
     public void setBomberman(JLabel bomberman) {
