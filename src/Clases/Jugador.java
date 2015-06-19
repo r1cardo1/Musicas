@@ -76,25 +76,7 @@ public class Jugador {
         this.y = y;
     }
     
-   public void moverArriba(){       
-       bomberman.setLocation(x, y-4);
-   } 
-    
-   public void moverAbajo(){
-       bomberman.setLocation(x,y+4);
-   }
    
-   public void moverDerecha(){
-       bomberman.setLocation(x+4,y);
-   }
-   
-   public void moverIzquierda(){
-       bomberman.setLocation(x-4,y);
-   }
-   
-   public void compruebaArriba(){
-       
-   }
 }
 
 
