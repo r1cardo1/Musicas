@@ -92,9 +92,7 @@ public class Jugador {
        bomberman.setLocation(x-4,y);
    }
    
-   public void compruebaArriba(){
-       
-   }
+
    
 }
 
