@@ -14,7 +14,22 @@ import javax.swing.JLabel;
 public class Bomba extends Thread{
     
     public JLabel bomba;
-    public int tiempo;
-    public int tamano;
-    public JLabel fuego;    
+    public int tiempo=3;
+    public int tamano=2;
+    public JLabel fuego;
+    int x;
+    int y;
+    
+    public Bomba(int x, int y){
+        this.x=x;
+        this.y=y;
+        bomba.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bomba.png")));
+        bomba.setBounds(x,y,43,43);
+        bomba.validate();
+    }
+    
+    @Override
+    public void run(){
+        
+    }
 }

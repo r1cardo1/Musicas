@@ -45,15 +45,27 @@ public class Juego extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        jButton1.setText("Juego Nuevo");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IniciarSesionN.png"))); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
+        jButton1.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IniciarSesionF.png"))); // NOI18N
+        jButton1.setDisabledSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IniciarSesionF.png"))); // NOI18N
+        jButton1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IniciarSesionP.png"))); // NOI18N
+        jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IniciarSesionF.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("High Scores");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/RegistroN.png"))); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.setContentAreaFilled(false);
+        jButton2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/RegistroP.png"))); // NOI18N
+        jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/RegistroF.png"))); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -67,23 +79,27 @@ public class Juego extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(298, 298, 298)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addContainerGap(307, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(317, 317, 317)
+                        .addComponent(jButton3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(181, 181, 181)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2)
+                            .addComponent(jButton1))))
+                .addContainerGap(225, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(266, 266, 266)
+                .addGap(247, 247, 247)
                 .addComponent(jButton1)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addGap(27, 27, 27)
+                .addGap(52, 52, 52)
                 .addComponent(jButton3)
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap(296, Short.MAX_VALUE))
         );
 
         pack();

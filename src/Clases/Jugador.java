@@ -19,6 +19,7 @@ public class Jugador {
     int x;
     int y;
     JLabel bomberman = new JLabel();
+    public int bombas=0;
     
         public String mapatext[][] = {{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
 {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
@@ -59,6 +60,14 @@ public class Jugador {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public void setBombas(int bombas) {
+        this.bombas = bombas;
+    }
+
+    public int getBombas() {
+        return bombas;
     }
 
     public String getApellido() {
@@ -171,6 +180,11 @@ public class Jugador {
        if(mapatext[posy][posx] == "S" && mapatext[posyy][posxx] == "S")
            opc = true;
        return opc;
+   }
+   
+   public void ponerBomba(){
+       
+       
    }
 }
 
