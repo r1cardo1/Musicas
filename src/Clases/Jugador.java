@@ -126,32 +126,50 @@ public class Jugador {
    }
    
    public boolean compruebaArriba(){          
-       boolean opc=false;       
-       if((mapatext[(x/43)][(y/43)] == "S") && (mapatext[(x+42)/43][y/43] == "S")){
-           opc=true;
-       }       
+       boolean opc=false;
+       int posx, posy,posxx,posyy;
+       posx = x/43;
+       posy = y/43-2;
+       posxx = (x+40)/43;
+       posyy = y/43-2;
+       if(mapatext[posy][posx] == "S" && mapatext[posyy][posxx] == "S")
+           opc = true;            
        return opc;
    }
    
    public boolean compruebaAbajo(){          
        boolean opc=false;       
-       if((mapatext[(x/43)][((y+42)/43)] == "S") && (mapatext[(x+42)/43][(y+42)/43] == "S")){
-           opc=true;
-       }       
+       int posx, posy,posxx,posyy;
+       posx = x/43;
+       posy = (y+40)/43-2;
+       posxx = (x+40)/43;
+       posyy = (y+40)/43-2;
+       if(mapatext[posy][posx] == "S" && mapatext[posyy][posxx] == "S")
+           opc = true;
        return opc;
    }
    
    public boolean compruebaIzquierda(){
        boolean opc=false;
-       if((mapatext[x/43][y/43]=="S")&&(mapatext[x/43][(y+42)/43]=="S"))
-           opc=true;
+       int posx, posy,posxx,posyy;
+       posx = x/43;
+       posy = y/43;
+       posxx = x/43;
+       posyy = (y+40)/43;
+       if(mapatext[posy][posx] == "S" && mapatext[posyy][posxx] == "S")
+           opc = true;
        return opc;
    }
    
    public boolean compruebaDerecha(){
        boolean opc=false;
-       if((mapatext[(x+42)/43][y/43]=="S")&&(mapatext[(x+42)/43][(y+42)/43]=="S"))
-           opc=true;
+       int posx, posy,posxx,posyy;
+       posx = (x+40)/43;
+       posy = y/43;
+       posxx = (x+40)/43;
+       posyy = (y+40)/43;
+       if(mapatext[posy][posx] == "S" && mapatext[posyy][posxx] == "S")
+           opc = true;
        return opc;
    }
 }
