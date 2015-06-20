@@ -127,7 +127,7 @@ public class Jugador {
    
    public boolean compruebaArriba(){          
        boolean opc=false;       
-       if((mapatext[(x/43)][(y/43)] == "S") && (mapatext[x/43][(y+42)/43] == "S")){
+       if((mapatext[(x/43)][(y/43)] == "S") && (mapatext[(x+42)/43][y/43] == "S")){
            opc=true;
        }       
        return opc;
@@ -135,7 +135,7 @@ public class Jugador {
    
    public boolean compruebaAbajo(){          
        boolean opc=false;       
-       if((mapatext[((x+42)/43)][(y/43)] == "S") && (mapatext[(x+42)/43][(y+42)/43] == "S")){
+       if((mapatext[(x/43)][((y+42)/43)] == "S") && (mapatext[(x+42)/43][(y+42)/43] == "S")){
            opc=true;
        }       
        return opc;
@@ -143,14 +143,14 @@ public class Jugador {
    
    public boolean compruebaIzquierda(){
        boolean opc=false;
-       if((mapatext[x/43][y/43]=="S")&&(mapatext[(x+42)/43][y/43]=="S"))
+       if((mapatext[x/43][y/43]=="S")&&(mapatext[x/43][(y+42)/43]=="S"))
            opc=true;
        return opc;
    }
    
    public boolean compruebaDerecha(){
        boolean opc=false;
-       if((mapatext[x/43][(y+42)/43]=="S")&&(mapatext[(x+42)/43][(y+42)/43]=="S"))
+       if((mapatext[(x+42)/43][y/43]=="S")&&(mapatext[(x+42)/43][(y+42)/43]=="S"))
            opc=true;
        return opc;
    }
