@@ -7,21 +7,24 @@ package JFrames;
 
 import Clases.Jugador;
 import javax.swing.JLabel;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyListener;
+
     
 /**
  *
  * @author Ricardo Marcano
  */
-public class Jugador1 extends javax.swing.JFrame {
+public class Jugador1 extends javax.swing.JFrame  implements ActionListener{
+
     
     String color;
-    Jugador player;
+    public Jugador player;
     JLabel[][] mapa = new JLabel[15][15];
-    String mapatext[][] = {{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
+    public String mapatext[][] = {{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
 {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
 {"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
 {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
@@ -45,7 +48,7 @@ public class Jugador1 extends javax.swing.JFrame {
      */
     public Jugador1(String nombre, String apellido,String color) {
         this.color = color;
-        player = new Jugador(nombre,apellido,44,130,color);
+        player = new Jugador(nombre,apellido,43,129,color);
         initComponents();
         cargarjugador();
         generarmapa();
@@ -64,6 +67,11 @@ public class Jugador1 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(657, 700));
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,59 +87,27 @@ public class Jugador1 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /*arguments
-     */
-        private void formKeyPressed(java.awt.event.KeyEvent evt) {                                
-        // TODO add your handling code here:
-        
-        
-        if(evt.getKeyCode()== KeyEvent.VK_UP){
-
-        }
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+            // TODO add your handling code here:
         if(evt.getKeyCode()== KeyEvent.VK_DOWN){
-      
-            
-        }
-        if(evt.getKeyCode()==KeyEvent.VK_LEFT){
-            
-        }
-
-        if(evt.getKeyCode()== KeyEvent.VK_RIGHT){
-
+            player.moverAbajo();
         }
         
-}
-
-    
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Jugador1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Jugador1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Jugador1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Jugador1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        if(evt.getKeyCode() == KeyEvent.VK_UP){
+            player.moverArriba();
         }
-        //</editor-fold>
+        
+        if(evt.getKeyCode() == KeyEvent.VK_LEFT){
+            player.moverIzquierda();
+        }
+        
+        if(evt.getKeyCode() == KeyEvent.VK_RIGHT){
+            player.moverDerecha();
+        }
+            
+    }//GEN-LAST:event_formKeyPressed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            //new Jugador1().setVisible(true);
-        });
-    }
+        
     public void generarmapa(){
         JLabel banner = new JLabel();
         banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner.png")));
@@ -162,6 +138,18 @@ public class Jugador1 extends javax.swing.JFrame {
         
     }
     
+    public String comprueba(int x, int y){        
+        return mapatext[y][x];
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+    }
+
+
+    
+ 
 }

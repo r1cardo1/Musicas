@@ -5,23 +5,22 @@
  */
 package Clases;
 
+import JFrames.Jugador1;
 import javax.swing.JLabel;
 
 /**
  *
  * @author Ricardo Marcano
  */
-public class Jugador extends javax.swing.JFrame{
+public class Jugador {
     String nombre;
     String apellido;
     int puntos;
     int x;
     int y;
     JLabel bomberman = new JLabel();
-    int label;
     
-        JLabel[][] mapa = new JLabel[15][15];
-    String mapatext[][] = {{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
+        public String mapatext[][] = {{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
 {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
 {"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
 {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
@@ -36,6 +35,9 @@ public class Jugador extends javax.swing.JFrame{
 {"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
 {"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
 {"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"}};
+
+    
+
 
     public Jugador(String nombre, String apellido, int x, int y,String color) {
         this.nombre = nombre;
@@ -95,36 +97,63 @@ public class Jugador extends javax.swing.JFrame{
         this.y = y;
     }
     
-    public void moverArriba(){       
-       bomberman.setLocation(x, y-4);
+    public void moverArriba(){
+        if(compruebaArriba()){
+            y-=4;
+       bomberman.setLocation(x,y);
+        }
    } 
     
    public void moverAbajo(){
-       bomberman.setLocation(x,y+4);
+       if(compruebaAbajo()){
+           y+=4;
+       bomberman.setLocation(x,y);
+       }
    }
    
    public void moverDerecha(){
-       bomberman.setLocation(x+4,y);
+       if(compruebaDerecha()){
+           x+=4;
+       bomberman.setLocation(x,y);
+       }
    }
    
    public void moverIzquierda(){
-       bomberman.setLocation(x-4,y);
+       if(compruebaIzquierda()){
+           x-=4;
+       bomberman.setLocation(x,y);
+       }
    }
    
-public void generarmapa(){
-        JLabel banner = new JLabel();
-        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/banner.png")));
-        add(banner);
-        banner.setBounds(0,0,647,86);
-        banner.validate();
-        for(int i=0;i<=14;i++)
-            for(int j=0;j<=12;j++){
-                mapa[j][i] = new JLabel();
-                mapa[j][i].setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+mapatext[j][i]+".png")));
-                add(mapa[j][i]);
-            }
+   public boolean compruebaArriba(){          
+       boolean opc=false;       
+       if((mapatext[(x/43)][(y/43)] == "S") && (mapatext[x/43][(y+42)/43] == "S")){
+           opc=true;
+       }       
+       return opc;
+   }
    
-}
+   public boolean compruebaAbajo(){          
+       boolean opc=false;       
+       if((mapatext[((x+42)/43)][(y/43)] == "S") && (mapatext[(x+42)/43][(y+42)/43] == "S")){
+           opc=true;
+       }       
+       return opc;
+   }
+   
+   public boolean compruebaIzquierda(){
+       boolean opc=false;
+       if((mapatext[x/43][y/43]=="S")&&(mapatext[(x+42)/43][y/43]=="S"))
+           opc=true;
+       return opc;
+   }
+   
+   public boolean compruebaDerecha(){
+       boolean opc=false;
+       if((mapatext[x/43][(y+42)/43]=="S")&&(mapatext[(x+42)/43][(y+42)/43]=="S"))
+           opc=true;
+       return opc;
+   }
 }
 
 
