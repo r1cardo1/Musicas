@@ -21,9 +21,10 @@ public class Juego extends javax.swing.JFrame {
      * Creates new form Juego
      */
     public Juego() {
+        setUndecorated(true);
                 initComponents();
         JLabel fondo = new JLabel();
-        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.jpg")));
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.png")));
                 add(fondo);
         fondo.setBounds(0,0,700,700);
         fondo.validate();
@@ -45,6 +46,7 @@ public class Juego extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(700, 700));
         setResizable(false);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IniciarSesionN.png"))); // NOI18N
@@ -73,6 +75,11 @@ public class Juego extends javax.swing.JFrame {
         });
 
         jButton3.setText("Salir");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton3MousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,6 +123,10 @@ public class Juego extends javax.swing.JFrame {
         dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MousePressed
+        System.exit(0);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3MousePressed
 
     /**
      * @param args the command line arguments
