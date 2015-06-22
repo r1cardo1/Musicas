@@ -6,13 +6,14 @@
 package Clases;
 
 import JFrames.Jugador1;
+import java.io.Serializable;
 import javax.swing.JLabel;
 
 /**
  *
  * @author Ricardo Marcano
  */
-public class Jugador {
+public class Jugador implements Serializable{
     String nombre;
     String apellido;
     int puntos;
@@ -20,6 +21,8 @@ public class Jugador {
     int y;
     JLabel bomberman = new JLabel();
     public int bombas=0;
+    public String correo;
+    public String clave;
     
         public String mapatext[][] = {{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
 {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
@@ -47,7 +50,15 @@ public class Jugador {
         this.x = x;
         this.y = y;
         bomberman.setBounds(x,y,43,43);
+
         
+    }
+    
+    public Jugador(String nombre, String apellido, String correo, String clave){
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo= correo;
+        this.clave = clave;
     }
 
     public void setBomberman(JLabel bomberman) {
