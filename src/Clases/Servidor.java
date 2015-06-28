@@ -21,16 +21,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import javax.mail.MessagingException;
 
 /**
@@ -44,6 +40,7 @@ public class Servidor implements Runnable {
     Jugador player;
     ServerSocket servidor;
     ObjectInputStream ois;
+    ArrayList<Jugador> usuarios = new ArrayList<Jugador>();
     
     public Servidor(){
         Thread hilo = new Thread(this);
@@ -57,8 +54,7 @@ public class Servidor implements Runnable {
     
 
     @Override
-    public void run() {
-        
+    public void run() {        
         try{
         servidor = new ServerSocket(27015);
 
@@ -66,23 +62,28 @@ public class Servidor implements Runnable {
                 cliente=servidor.accept();
                 ObjectInputStream datoE = new ObjectInputStream(cliente.getInputStream());
                 player=(Jugador)datoE.readObject();
-                if(comparar(player))
+                //if(!comparar(player))
                     agregarUsuario(player);
+                cliente.close();
             }
         }catch(Exception e){} 
         }
     
     public boolean comparar(Jugador player) throws IOException{
         boolean opc = true;
+        Jugador a;
         
         try{
-            datos = new File("C:\\Users\\Ricardo Marcano\\Desktop\\pruebas\\datos.uneg");
+            datos = new File("C:\\Users\\Ricardo Marcano\\Desktop\\pruebas\\datos");
             FileInputStream fis = new FileInputStream(datos);
             ois = new ObjectInputStream(fis);
             while(true){
-                Jugador aux=(Jugador)ois.readObject();
-                if(player.correo==aux.correo)
+                ArrayList<Jugador> aux=(ArrayList<Jugador>)ois.readObject();
+                for(int i = 0;i<aux.size();i++){
+                   a=aux.get(i);
+                if(player.correo==a.correo)
                     opc=false;
+                }
             }            
             }catch(Exception e){}finally{
             ois.close();
@@ -91,27 +92,24 @@ public class Servidor implements Runnable {
         return opc;
     }
     
-    public void agregarUsuario(Jugador player){
-            File f = new File("C:\\Users\\Ricardo Marcano\\Desktop\\pruebas\\datos.uneg");
- 
-    //Esto siempre debe de ir el FileOutputStream y ObjectOutputStream
+    public void agregarUsuario(Jugador player) throws FileNotFoundException, IOException, ClassNotFoundException{
+    File f = new File("C:\\Users\\Ricardo Marcano\\Desktop\\pruebas\\datos");
     FileOutputStream fos = null;
     ObjectOutputStream escribirObjeto = null;
- 
+    
+    
     try{
-        /* Sabemos muy bien que en lugar de 'f' que es de tipo file
-         * puede tambien colocarse un variable tipo String o una cadena como tal
-         * Ejemplo: fos = new FileOutputStream( "capsula.bin" );
-         * Ejemplo: String s = "capsula.bin";
-         *          fos = new FileOutputStream( s );
-         */
-        fos = new FileOutputStream( f );
-        escribirObjeto = new ObjectOutputStream( fos );
- 
-        //Se escribe la instancia de la clase CasaBulma
-        escribirObjeto.writeObject( player );
+        ArrayList<Jugador> lista;
+        FileInputStream fis = new FileInputStream(f);
+        ois = new ObjectInputStream(fis);
+        lista = (ArrayList<Jugador>)ois.readObject();
+        lista.add(player);
+        fos = new FileOutputStream(f);
+        escribirObjeto = new ObjectOutputStream(fos);
+        escribirObjeto.writeObject(lista);
+        
     }
-    catch( Exception e ){ }
+    catch( Exception e ){System.out.println(e); }
     finally
     {
         try{

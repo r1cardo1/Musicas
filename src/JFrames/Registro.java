@@ -6,6 +6,7 @@
 package JFrames;
 
 import Clases.Jugador;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -19,7 +20,7 @@ import javax.swing.JLabel;
  * @author Ricardo Marcano
  */
 public class Registro extends javax.swing.JFrame {
-
+    JLabel fondo;
     /**
      * Creates new form Registro
      */
@@ -27,6 +28,12 @@ public class Registro extends javax.swing.JFrame {
         setUndecorated(true);
         initComponents();
         setFondo();
+        
+            fondo = new JLabel();
+    fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoRegistro.png")));
+    fondo.setBounds(0,0,700,700);
+    add(fondo);
+    fondo.validate();
         
     }
 
@@ -171,20 +178,18 @@ public class Registro extends javax.swing.JFrame {
         
         try{
             Socket jugador = new Socket("127.0.0.1",27015);
+            
             Jugador player = new Jugador(nombreT.getText(),apellidoT.getText(),correoT.getText(),claveT.getText());
             ObjectOutputStream datoS = new ObjectOutputStream(jugador.getOutputStream());
             datoS.writeObject(player);
-            
+            jugador.close();
         } catch (IOException ex) {
             Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_registroMousePressed
 
 public void setFondo(){
-    JLabel fondo = new JLabel();
-    fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoRegistro.png")));
-    fondo.setBounds(0,0,700,700);
-    fondo.validate();
+
        
 }
 
