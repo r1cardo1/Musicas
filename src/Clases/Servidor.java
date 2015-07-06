@@ -8,7 +8,6 @@ package Clases;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Session;
@@ -41,6 +40,8 @@ public class Servidor implements Runnable {
     ServerSocket servidor;
     ObjectInputStream ois;
     ArrayList<Jugador> usuarios = new ArrayList<Jugador>();
+    String funcion;
+    String correo;
     
     public Servidor(){
         Thread hilo = new Thread(this);
@@ -61,34 +62,49 @@ public class Servidor implements Runnable {
             while(true){
                 cliente=servidor.accept();
                 ObjectInputStream datoE = new ObjectInputStream(cliente.getInputStream());
-                player=(Jugador)datoE.readObject();
-                //if(!comparar(player))
-                    agregarUsuario(player);
+                funcion =(String)datoE.readObject();
+                System.out.println(funcion);
+                if(funcion.equals("recuerdaClave")){
+                         System.out.println("1");
+                    correo = (String)datoE.readObject();
+                         System.out.println("2");
+                    recordarClave(correo);
+                }
+                if(funcion.equals("clienteNuevo") ){          
+                                    System.out.println("1");
+                    player=(Jugador)datoE.readObject();
+                                    System.out.println("2");
+                    if(compararBD(player)){
+                                        System.out.println("3");
+                        agregarUsuario(player);  
+                    }
+                }
                 cliente.close();
             }
-        }catch(Exception e){} 
+        }catch(Exception e){System.out.println(e);} 
         }
+   
+
     
-    public boolean comparar(Jugador player) throws IOException{
+    public boolean compararBD(Jugador player) throws IOException{
         boolean opc = true;
         Jugador a;
+        ArrayList<Jugador> aux = new ArrayList<Jugador>();
         
         try{
             datos = new File("C:\\Users\\Ricardo Marcano\\Desktop\\pruebas\\datos");
             FileInputStream fis = new FileInputStream(datos);
-            ois = new ObjectInputStream(fis);
-            while(true){
-                ArrayList<Jugador> aux=(ArrayList<Jugador>)ois.readObject();
+            ObjectInputStream ais = new ObjectInputStream(fis);
+            
+            aux =(ArrayList<Jugador>)ais.readObject();
+            ois.close();
+            }catch(IOException | ClassNotFoundException e){System.out.println(e);}       
+
                 for(int i = 0;i<aux.size();i++){
                    a=aux.get(i);
-                if(player.correo==a.correo)
+                if(player.correo.equals(a.correo))
                     opc=false;
                 }
-            }            
-            }catch(Exception e){}finally{
-            ois.close();
-        }
-        
         return opc;
     }
     
@@ -96,48 +112,52 @@ public class Servidor implements Runnable {
     File f = new File("C:\\Users\\Ricardo Marcano\\Desktop\\pruebas\\datos");
     FileOutputStream fos = null;
     ObjectOutputStream escribirObjeto = null;
+        ArrayList<Jugador> lista = new ArrayList<Jugador>();
     
     
     try{
-        ArrayList<Jugador> lista;
+
         FileInputStream fis = new FileInputStream(f);
         ois = new ObjectInputStream(fis);
+        
         lista = (ArrayList<Jugador>)ois.readObject();
+    }catch(IOException | ClassNotFoundException e){}
         lista.add(player);
+    try{
         fos = new FileOutputStream(f);
         escribirObjeto = new ObjectOutputStream(fos);
         escribirObjeto.writeObject(lista);
-        
+        escribirObjeto.close();        
     }
     catch( Exception e ){System.out.println(e); }
-    finally
-    {
-        try{
-            //Se cierra el archivo y listo.
-            if( escribirObjeto != null ) escribirObjeto.close();
-        }catch( Exception ex ){}
-    }
+
     }
     
-    public boolean recordarClave(Jugador player) throws FileNotFoundException, IOException, ClassNotFoundException, MessagingException{
+    public void recordarClave(String correo) throws FileNotFoundException, IOException, ClassNotFoundException, MessagingException{
+        Jugador usuario;
+ 
     String rutaArchivo="";
     String nombreArchivo="";
     String usuarioCorreo="rmarcano18@gmail.com";
     String password="fordracing";  
-    String destinatario=player.correo;
+    String destinatario=correo;
     String asunto="CLAVE BOMBERMAN";
-    String mensaje="ESTIMADO USUARIO "+player.nombre+" la clave de su cuenta es: "+player.clave;
+    String mensaje;//="ESTIMADO USUARIO "+player.nombre+" la clave de su cuenta es: "+player.clave;
+    ArrayList<Jugador> lista;
     
     try
         {
-            
-            datos = new File("C:\\Users\\Ricardo Marcano\\datos.uneg");
+       
+            datos = new File("C:\\Users\\Ricardo Marcano\\Desktop\\pruebas\\datos");
             FileInputStream fis = new FileInputStream(datos);
-            ois = new ObjectInputStream(fis);
-            while(true){
-                Jugador aux=(Jugador)ois.readObject();
-                if(player.correo==aux.correo){               
-                
+            ObjectInputStream asd = new ObjectInputStream(fis);
+            lista=(ArrayList<Jugador>)asd.readObject();
+            for(int i=0;i<lista.size();i++){
+                usuario = lista.get(i);
+                System.out.println(usuario.correo);
+                if(correo.equals(usuario.correo)){ 
+                    System.out.println("ENVIANDO CORREO!!!");
+            mensaje = "ESTIMADO USUARIO "+usuario.nombre+" la clave de su cuenta es: "+usuario.clave;
             Properties props = new Properties();
             props.put("mail.smtp.host", "smtp.gmail.com");
             props.setProperty("mail.smtp.starttls.enable", "true");
@@ -174,12 +194,12 @@ public class Servidor implements Runnable {
             t.connect(usuarioCorreo, password);
             t.sendMessage(message, message.getAllRecipients());
             t.close();
-            return true;
+            
         }}}
         catch (Exception e)
         {
             e.printStackTrace();
-            return false;
+            
         }finally{
             ois.close();
         }

@@ -25,11 +25,11 @@ public class Juego extends javax.swing.JFrame {
     
     int x,y;
     public Juego() {
-        setUndecorated(true);
-                initComponents();
+        //setUndecorated(true);
+        initComponents();
         JLabel fondo = new JLabel();
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.jpg")));
-                add(fondo);
+        add(fondo);
         fondo.setBounds(0,0,700,700);
         fondo.validate();
 
@@ -51,7 +51,7 @@ public class Juego extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(700, 700));
+        setPreferredSize(new java.awt.Dimension(706, 728));
         setResizable(false);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -152,10 +152,11 @@ public class Juego extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        Personalizacion ventana = new Personalizacion();
-        ventana.setVisible(true);
-        dispose();
+
         // TODO add your handling code here:
+        
+        new IniciarSesion().setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void barraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraMousePressed
@@ -183,6 +184,7 @@ public class Juego extends javax.swing.JFrame {
     private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
             // TODO add your handling code here:
         new Registro().setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton2MousePressed
 
     /**
