@@ -36,6 +36,8 @@ import javax.mail.MessagingException;
  */
 public class Servidor implements Runnable {
     
+    
+    Partida listaPartidas[];
     File datos ;
     Socket cliente;
     Jugador player;
@@ -68,9 +70,7 @@ public class Servidor implements Runnable {
                 funcion =(String)datoE.readObject();
                 System.out.println(funcion);
                 if(funcion.equals("recuerdaClave")){
-                         System.out.println("1");
                     correo = (String)datoE.readObject();
-                         System.out.println("2");
                     recordarClave(correo);
                 }
                 if(funcion.equals("clienteNuevo") ){          
@@ -78,8 +78,7 @@ public class Servidor implements Runnable {
                     if(compararBD(player)){
                         agregarUsuario(player);  
                     }
-                }
-                
+                }                
                 if(funcion.equals("iniciarSesion")){
                     String correoi=null;
                     String clavei=null;                    
@@ -92,11 +91,10 @@ public class Servidor implements Runnable {
                 
                 
                 
+                
                 cliente.close();
             }
-        }catch(ClassNotFoundException | MessagingException e){e.printStackTrace();} catch (IOException ex) { 
-            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }catch(ClassNotFoundException | MessagingException e){e.printStackTrace();} catch (IOException ex) {ex.printStackTrace();} 
         }
    
 
@@ -121,8 +119,7 @@ public class Servidor implements Runnable {
         }
         
         return p;
-    }
-    
+    }    
     
     public boolean compararBD(Jugador player) throws IOException{
         boolean opc = true;
@@ -240,5 +237,13 @@ public class Servidor implements Runnable {
             e.printStackTrace();            
         }
             
+    }
+
+    public void nuevaPartida(String nombre, Jugador player){
+        for(int i=0;i<listaPartidas.length;i++){
+            if(listaPartidas[i]==null){
+                listaPartidas[i]= new Partida(nombre,player);                
+            }
+        }
     }
 }

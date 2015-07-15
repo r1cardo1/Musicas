@@ -57,6 +57,11 @@ public class Perfil extends javax.swing.JFrame {
         jButton2.setContentAreaFilled(false);
         jButton2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/multijugadoPr.png"))); // NOI18N
         jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/multijugadoFr.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/highScoresN.png"))); // NOI18N
         jButton3.setBorder(null);
@@ -147,6 +152,12 @@ public class Perfil extends javax.swing.JFrame {
         new ConfPartida(player).setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        new Multijugador(player).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     
     public void ponerFondo(){
