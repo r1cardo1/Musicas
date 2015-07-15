@@ -26,6 +26,8 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.MessagingException;
 
 /**
@@ -34,7 +36,7 @@ import javax.mail.MessagingException;
  */
 public class Servidor implements Runnable {
     
-    File datos = null;
+    File datos ;
     Socket cliente;
     Jugador player;
     ServerSocket servidor;
@@ -48,7 +50,7 @@ public class Servidor implements Runnable {
         hilo.start();
     }
     
-    public static void main(String args[]) throws IOException{
+    public static void main(String args[]){
         new Servidor();
     }
     
@@ -61,6 +63,7 @@ public class Servidor implements Runnable {
 
             while(true){
                 cliente=servidor.accept();
+                ObjectOutputStream datoS = new ObjectOutputStream(cliente.getOutputStream());
                 ObjectInputStream datoE = new ObjectInputStream(cliente.getInputStream());
                 funcion =(String)datoE.readObject();
                 System.out.println(funcion);
@@ -71,20 +74,55 @@ public class Servidor implements Runnable {
                     recordarClave(correo);
                 }
                 if(funcion.equals("clienteNuevo") ){          
-                                    System.out.println("1");
                     player=(Jugador)datoE.readObject();
-                                    System.out.println("2");
                     if(compararBD(player)){
-                                        System.out.println("3");
                         agregarUsuario(player);  
                     }
                 }
+                
+                if(funcion.equals("iniciarSesion")){
+                    String correoi=null;
+                    String clavei=null;                    
+                    correoi=(String)datoE.readObject();
+                    clavei=(String)datoE.readObject();                    
+                    datoS.writeObject(iniciarSesion(correoi,clavei));                    
+                }
+                
+                
+                
+                
+                
                 cliente.close();
             }
-        }catch(Exception e){System.out.println(e);} 
+        }catch(ClassNotFoundException | MessagingException e){e.printStackTrace();} catch (IOException ex) { 
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         }
    
 
+    public Jugador iniciarSesion(String correo, String clave){        
+        Jugador p=null;
+        Jugador a;
+        ArrayList<Jugador> aux = new ArrayList<Jugador>();
+        
+        try{
+            datos = new File("C:\\Users\\Ricardo Marcano\\Desktop\\pruebas\\datos");
+            FileInputStream fis = new FileInputStream(datos);
+            ObjectInputStream ais = new ObjectInputStream(fis);
+            
+            aux =(ArrayList<Jugador>)ais.readObject();
+            ais.close();
+            }catch(IOException | ClassNotFoundException e){System.out.println(e);} 
+        
+        for(int i=0;i<aux.size();i++){
+            a=aux.get(i);
+            if(a.clave.equals(clave) && a.correo.equals(correo))
+                p=a;
+        }
+        
+        return p;
+    }
+    
     
     public boolean compararBD(Jugador player) throws IOException{
         boolean opc = true;
@@ -97,7 +135,7 @@ public class Servidor implements Runnable {
             ObjectInputStream ais = new ObjectInputStream(fis);
             
             aux =(ArrayList<Jugador>)ais.readObject();
-            ois.close();
+            ais.close();
             }catch(IOException | ClassNotFoundException e){System.out.println(e);}       
 
                 for(int i = 0;i<aux.size();i++){
@@ -152,6 +190,7 @@ public class Servidor implements Runnable {
             FileInputStream fis = new FileInputStream(datos);
             ObjectInputStream asd = new ObjectInputStream(fis);
             lista=(ArrayList<Jugador>)asd.readObject();
+            asd.close();
             for(int i=0;i<lista.size();i++){
                 usuario = lista.get(i);
                 System.out.println(usuario.correo);
@@ -198,10 +237,7 @@ public class Servidor implements Runnable {
         }}}
         catch (Exception e)
         {
-            e.printStackTrace();
-            
-        }finally{
-            ois.close();
+            e.printStackTrace();            
         }
             
     }

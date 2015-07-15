@@ -6,6 +6,7 @@
 package JFrames;
 
 
+import Clases.SonidoBotonThread;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import javax.swing.JLabel;
@@ -26,6 +27,7 @@ public class Juego extends javax.swing.JFrame {
     int x,y;
     public Juego() {
         //setUndecorated(true);
+
         initComponents();
         JLabel fondo = new JLabel();
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.jpg")));
@@ -67,6 +69,11 @@ public class Juego extends javax.swing.JFrame {
         jButton1.setDisabledSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IniciarSesionF.png"))); // NOI18N
         jButton1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IniciarSesionP.png"))); // NOI18N
         jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IniciarSesionF.png"))); // NOI18N
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton1MouseEntered(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -79,6 +86,12 @@ public class Juego extends javax.swing.JFrame {
         jButton2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/RegistroP.png"))); // NOI18N
         jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/RegistroF.png"))); // NOI18N
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton2MouseExited(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jButton2MousePressed(evt);
             }
@@ -144,6 +157,7 @@ public class Juego extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -186,6 +200,18 @@ public class Juego extends javax.swing.JFrame {
         new Registro().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2MousePressed
+
+    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
+        new SonidoBotonThread().start();
+    }//GEN-LAST:event_jButton1MouseEntered
+
+    private void jButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseExited
+
+    }//GEN-LAST:event_jButton2MouseExited
+
+    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
+        new SonidoBotonThread().start();
+    }//GEN-LAST:event_jButton2MouseEntered
 
     /**
      * @param args the command line arguments

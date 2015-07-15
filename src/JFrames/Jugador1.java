@@ -20,25 +20,10 @@ import java.awt.event.KeyListener;
  */
 public class Jugador1 extends javax.swing.JFrame  implements ActionListener{
 
-    
+    int ii=0;
     String color;
     public Jugador player;
     JLabel[][] mapa = new JLabel[15][15];
-    public String mapatext[][] = {{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
-{"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
-{"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
-{"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
-{"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
-{"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
-{"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
-{"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
-{"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
-{"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
-{"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
-{"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
-{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
-{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
-{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"}};
     
     /**
      * Creates new form Jugador1
@@ -48,7 +33,7 @@ public class Jugador1 extends javax.swing.JFrame  implements ActionListener{
      */
     public Jugador1(String nombre, String apellido,String color) {
         this.color = color;
-        player = new Jugador(nombre,apellido,43,129,color);
+        player = new Jugador(nombre,apellido,44,119,color);
         initComponents();
         cargarjugador();
         generarmapa();
@@ -89,19 +74,45 @@ public class Jugador1 extends javax.swing.JFrame  implements ActionListener{
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
             // TODO add your handling code here:
+        
         if(evt.getKeyCode()== KeyEvent.VK_DOWN){
-            player.moverAbajo();
+            
+            player.getBomberman().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+color+"/Front/Bman_F_f0"+ii+".png")));
+            player.getBomberman().validate();
+            ii++;
+            if(ii>7)
+                ii=0;
+            player.moverAbajo();            
         }
         
         if(evt.getKeyCode() == KeyEvent.VK_UP){
-            player.moverArriba();
+            
+            player.getBomberman().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+color+"/Back/Bman_B_f0"+ii+".png")));
+            player.getBomberman().validate();
+            ii++;
+            if(ii>7)
+                ii=0;
+            player.moverArriba();            
         }
         
         if(evt.getKeyCode() == KeyEvent.VK_LEFT){
+            
+            player.getBomberman().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+color+"/izquierda/Bman_F_f0"+ii+".png")));
+            player.getBomberman().validate();
+            ii++;
+            if(ii>7)
+                ii=0;
             player.moverIzquierda();
         }
         
         if(evt.getKeyCode() == KeyEvent.VK_RIGHT){
+            
+            player.getBomberman().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+color+"/Side/Bman_F_f0"+ii+".png")));
+            player.getBomberman().validate();
+            ii++;
+            System.out.print(ii);
+            if(ii>7)
+                ii=0;
             player.moverDerecha();
         }
             
@@ -117,29 +128,26 @@ public class Jugador1 extends javax.swing.JFrame  implements ActionListener{
         for(int i=0;i<=14;i++)
             for(int j=0;j<=12;j++){
                 mapa[j][i] = new JLabel();
-                mapa[j][i].setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+mapatext[j][i]+".png")));
+                mapa[j][i].setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+player.mapatext[j][i]+".png")));
                 add(mapa[j][i]);
             }
-        
         for(int i=0;i<=14;i++)
             for(int j=0;j<=12;j++){
                 mapa[j][i].setBounds(i*43,j*43+86,43,43);
                 mapa[j][i].validate();
             }
-        
-        
-
     }
     
     public void cargarjugador(){
-        player.getBomberman().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+color+".png")));
+        player.getBomberman().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+color+"/Front/Bman_F_f00.png")));
         add(player.getBomberman());
-        player.getBomberman().validate();
-        
+        player.getBomberman().setBounds(player.getX(), player.getY(), 29, 53);
+        player.getBomberman().validate();        
     }
+
     
     public String comprueba(int x, int y){        
-        return mapatext[y][x];
+        return player.mapatext[y][x];
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
@@ -147,9 +155,6 @@ public class Jugador1 extends javax.swing.JFrame  implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         
-    }
-
-
-    
+    }   
  
 }

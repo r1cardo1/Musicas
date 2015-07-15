@@ -61,7 +61,6 @@ public class Registro extends javax.swing.JFrame {
         claveIncorrecta = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(706, 728));
         setResizable(false);
 
         nombre.setText("Nombre:");
@@ -174,6 +173,7 @@ public class Registro extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
@@ -185,9 +185,9 @@ public class Registro extends javax.swing.JFrame {
     private void registroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroMousePressed
         // TODO add your handling code here:
         String passsword = new String(confClave.getPassword());
-
+        String confpassword = new String(claveT.getPassword());
         claveIncorrecta.setVisible(false);
-        if (confClave.getPassword().equals(claveT.getPassword())) {
+        if (passsword.equals(confpassword)) {
 
         
             try {
