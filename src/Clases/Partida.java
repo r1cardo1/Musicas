@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -17,7 +18,7 @@ import java.net.Socket;
  *
  * @author Ricardo Marcano
  */
-public class Partida extends Thread{
+public class Partida extends Thread implements Serializable{
     public Jugador player1;
     public Jugador player2;
     public Jugador player3;
@@ -28,8 +29,7 @@ public class Partida extends Thread{
     
     public Jugador1 tablero;
     
-    public Partida(String nombre,Jugador player){
-        player1 = player;
+    public Partida(String nombre){
         this.nombre = nombre;
     }
 

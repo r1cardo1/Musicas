@@ -54,6 +54,11 @@ public class Multijugador extends javax.swing.JFrame {
         jButton1.setContentAreaFilled(false);
         jButton1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/crearPartidaP.png"))); // NOI18N
         jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/crearPartidaF.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unirmeN.png"))); // NOI18N
         jButton2.setBorder(null);
@@ -94,6 +99,10 @@ public class Multijugador extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new ConfiguraPartida(player,this).setVisible(true);        
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     public void fondo(){
         JLabel fondo = new JLabel();

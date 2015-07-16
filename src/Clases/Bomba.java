@@ -5,13 +5,14 @@
  */
 package Clases;
 
+import java.io.Serializable;
 import javax.swing.JLabel;
 
 /**
  *
  * @author Ricardo Marcano
  */
-public class Bomba extends Thread{
+public class Bomba extends Thread implements Serializable{
     
     public JLabel bomba;
     public int tiempo=3;

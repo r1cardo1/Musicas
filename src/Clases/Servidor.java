@@ -36,8 +36,9 @@ import javax.mail.MessagingException;
  */
 public class Servidor implements Runnable {
     
-    
-    Partida listaPartidas[];
+    Partida parti;
+    String opc=null;
+    ArrayList<Partida> listaPartidas = new ArrayList<Partida>();
     File datos ;
     Socket cliente;
     Jugador player;
@@ -87,11 +88,13 @@ public class Servidor implements Runnable {
                     datoS.writeObject(iniciarSesion(correoi,clavei));                    
                 }
                 
-                
-                
-                
-                
-                
+                if(funcion.equals("crearPartida")){
+                    String nombre;
+                    Jugador player;
+                    nombre=(String)datoE.readObject();
+                    player=(Jugador)datoE.readObject();
+                    nuevaPartida(nombre,player);
+                }
                 cliente.close();
             }
         }catch(ClassNotFoundException | MessagingException e){e.printStackTrace();} catch (IOException ex) {ex.printStackTrace();} 
@@ -239,10 +242,22 @@ public class Servidor implements Runnable {
             
     }
 
-    public void nuevaPartida(String nombre, Jugador player){
-        for(int i=0;i<listaPartidas.length;i++){
-            if(listaPartidas[i]==null){
-                listaPartidas[i]= new Partida(nombre,player);                
+    public void nuevaPartida(String nombre, Jugador player) throws IOException{
+            listaPartidas.add(new Partida(nombre));
+            unirsePartida(nombre,player);
+    }
+    
+    public void unirsePartida(String nombre, Jugador player) throws IOException {
+        
+        ObjectOutputStream datoS = new ObjectOutputStream(cliente.getOutputStream());
+        for(int i=0;i<listaPartidas.size();i++){
+            if(listaPartidas.get(i).getNombre().equals(nombre)){
+                if(listaPartidas.get(i).jugadores<4){
+                    opc = "entrando";
+                    listaPartidas.get(i).player1=player;
+                    datoS.writeObject(listaPartidas.get(i));                    
+                }
+                datoS.writeObject("partidaLLena");
             }
         }
     }
