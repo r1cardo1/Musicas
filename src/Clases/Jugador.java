@@ -27,6 +27,7 @@ public class Jugador implements Serializable{
     public String clave;
     public String ip;
     
+    
     public String mapatext[][] = {{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
     {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
     {"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},

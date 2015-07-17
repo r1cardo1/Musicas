@@ -13,19 +13,31 @@ import javax.swing.JLabel;
  *
  * @author Ricardo Marcano
  */
-public class Lobby extends javax.swing.JFrame {
+public class Lobby extends javax.swing.JFrame implements Runnable{
 
 
     public Lobby(Partida part, Jugador player) {
         initComponents();
-        fondo();                
+        fondo();
+        jugadorHost(player);
+        
     }
     
         public Lobby(Partida part,Jugador player,String tipo) {
         initComponents();
         fondo();
+        jugadorCliente(player);
         btEnviar.setEnabled(false);
     }
+        
+        public void run(){
+            try{
+                while(true){
+                    
+                }
+            }catch(Exception e){e.printStackTrace();}
+            
+        }
 
 
     @SuppressWarnings("unchecked")

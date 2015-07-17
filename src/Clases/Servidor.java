@@ -94,6 +94,10 @@ public class Servidor implements Runnable {
                     nombre=(String)datoE.readObject();
                     player=(Jugador)datoE.readObject();
                     nuevaPartida(nombre,player);
+                    datoS.writeObject(opc);
+                    if(opc.equals("entrando")){
+                        datoS.writeObject(parti);
+                    }
                 }
                 cliente.close();
             }
@@ -249,15 +253,14 @@ public class Servidor implements Runnable {
     
     public void unirsePartida(String nombre, Jugador player) throws IOException {
         
-        ObjectOutputStream datoS = new ObjectOutputStream(cliente.getOutputStream());
+
         for(int i=0;i<listaPartidas.size();i++){
             if(listaPartidas.get(i).getNombre().equals(nombre)){
                 if(listaPartidas.get(i).jugadores<4){
                     opc = "entrando";
                     listaPartidas.get(i).player1=player;
-                    datoS.writeObject(listaPartidas.get(i));                    
+                    parti=listaPartidas.get(i);                    
                 }
-                datoS.writeObject("partidaLLena");
             }
         }
     }

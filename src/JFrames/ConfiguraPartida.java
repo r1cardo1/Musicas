@@ -106,7 +106,7 @@ public class ConfiguraPartida extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
             Partida parti;
-        String resp;
+        String resp=new String();
          try {
                 Socket jugador = new Socket("127.0.0.1", 27015);
                 ObjectOutputStream datoS = new ObjectOutputStream(jugador.getOutputStream());
