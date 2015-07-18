@@ -183,7 +183,7 @@ public class Multijugador extends javax.swing.JFrame {
                 jugador.close();
             } catch (IOException ex) {ex.printStackTrace();}
         
-        for(int i=1;i<listaPartidas.size();i++){
+        for(int i=0;i<listaPartidas.size();i++){
             String v[] ={listaPartidas.get(i).nombre,Integer.toString(listaPartidas.get(i).jugadores)};
             modelo.addRow(v);
         }
