@@ -6,6 +6,8 @@
 package JFrames;
 
 import Clases.Jugador;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 
 
@@ -155,7 +157,10 @@ public class Perfil extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        new Multijugador(player).setVisible(true);
+        try {
+            new Multijugador(player).setVisible(true);
+        } catch (ClassNotFoundException ex) {ex.printStackTrace();;
+        }
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

@@ -98,11 +98,31 @@ public class Servidor implements Runnable {
                     datoS.writeObject(opc);
                     if(opc.equals("entrando")){
                         datoS.writeObject(parti);
+                        opc="";
                     }
                 }
                 
                 if(funcion.equals("cargaPartidas")){
                     datoS.writeObject(listaPartidas);
+                }
+                
+                if(funcion.equals("ActualizaPartida")){
+                    String nombre;
+                    nombre = (String)datoE.readObject();
+                    datoS.writeObject(buscaPartida(nombre));
+                }
+                
+                if(funcion.equals("unirmePartida")){
+                    String nombre;
+                    Jugador player;
+                    nombre = (String) datoE.readObject();
+                    player = (Jugador)datoE.readObject();
+                    datoS.writeObject("entrando");
+                    unirsePartida(nombre,player);
+                    if(opc.equals("entrando")){
+                        datoS.writeObject(parti);
+                        opc="";
+                    }                    
                 }
                 cliente.close();
             }
@@ -263,10 +283,47 @@ public class Servidor implements Runnable {
             if(listaPartidas.get(i).getNombre().equals(nombre)){
                 if(listaPartidas.get(i).jugadores<4){
                     opc = "entrando";
+                    if(listaPartidas.get(i).player1==null){
                     listaPartidas.get(i).player1=player;
-                    parti=listaPartidas.get(i);                    
+                    listaPartidas.get(i).jugadores++;
+                    parti=listaPartidas.get(i);
+                    }
+                    else{
+                        if(listaPartidas.get(i).player2==null){
+                            listaPartidas.get(i).player2=player;
+                            listaPartidas.get(i).jugadores++;
+                            parti=listaPartidas.get(i);
+                        }
+                        else{
+                            if(listaPartidas.get(i).player3==null){
+                            listaPartidas.get(i).player3=player;
+                            listaPartidas.get(i).jugadores++;
+                            parti=listaPartidas.get(i);
+                        }
+                            else{
+                                if(listaPartidas.get(i).player4==null){
+                                listaPartidas.get(i).player4=player;
+                                listaPartidas.get(i).jugadores++;
+                                parti=listaPartidas.get(i);
+                        }
+                            }
+                            
+                        }
+                    }
                 }
             }
         }
+    }
+    
+    public Partida buscaPartida(String nombre){
+        Partida parti=null;
+        
+        for(int i = 0; i<listaPartidas.size();i++){
+            if(listaPartidas.get(i).nombre.equals(nombre)){
+                parti = listaPartidas.get(i);
+            }
+        }
+        
+        return parti;
     }
 }

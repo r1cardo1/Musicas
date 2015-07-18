@@ -13,6 +13,8 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
@@ -58,7 +60,15 @@ public class Multijugador extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/crearPartidaN.png"))); // NOI18N
@@ -79,6 +89,11 @@ public class Multijugador extends javax.swing.JFrame {
         jButton2.setContentAreaFilled(false);
         jButton2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unirmeP.png"))); // NOI18N
         jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unirmeF.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,6 +131,30 @@ public class Multijugador extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new ConfiguraPartida(player,this).setVisible(true);        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String v,opc;
+        Partida parti;
+        for(int i =0;i<modelo.getRowCount();i++){
+           v=(String) modelo.getValueAt(i, 0);
+                   try {
+                Socket jugador = new Socket("127.0.0.1", 27015);
+                ObjectOutputStream datoS = new ObjectOutputStream(jugador.getOutputStream());
+                ObjectInputStream datoE = new ObjectInputStream(jugador.getInputStream());
+                datoS.writeObject("unirmePartida");
+                datoS.writeObject(v);
+                datoS.writeObject(player);
+                opc = (String)datoE.readObject();
+                if(opc.equals("entrando")){
+                       parti = (Partida)datoE.readObject();
+                       new Lobby(parti,player).setVisible(true);
+                       dispose();
+                   }
+                jugador.close();                
+            } catch (IOException ex) {ex.printStackTrace();} catch (ClassNotFoundException ex) {ex.printStackTrace();}
+           
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
     
     public void fondo(){
         JLabel fondo = new JLabel();
@@ -130,7 +169,7 @@ public class Multijugador extends javax.swing.JFrame {
         String datos[][]={};
         modelo = new DefaultTableModel(datos,cabecera);
         jTable1.setModel(modelo);
-    };
+    }
     
     public void cargarPartidas() throws ClassNotFoundException{
         
@@ -140,11 +179,13 @@ public class Multijugador extends javax.swing.JFrame {
                 ObjectInputStream datoE = new ObjectInputStream(jugador.getInputStream());
                 datoS.writeObject("cargaPartidas");
                 listaPartidas = (ArrayList<Partida>)datoE.readObject();
+                
                 jugador.close();
             } catch (IOException ex) {ex.printStackTrace();}
         
         for(int i=1;i<listaPartidas.size();i++){
-            modelo.addRow(new Object[]{listaPartidas.get(i).nombre,listaPartidas.get(i).jugadores});
+            String v[] ={listaPartidas.get(i).nombre,Integer.toString(listaPartidas.get(i).jugadores)};
+            modelo.addRow(v);
         }
     }
     

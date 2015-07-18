@@ -7,6 +7,12 @@ package JFrames;
 
 import Clases.Jugador;
 import Clases.Partida;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 
 /**
@@ -14,26 +20,33 @@ import javax.swing.JLabel;
  * @author Ricardo Marcano
  */
 public class Lobby extends javax.swing.JFrame implements Runnable{
-
+    Partida parti;
 
     public Lobby(Partida part, Jugador player) {
+        parti = part;
         initComponents();
         fondo();
-        jugadorHost(player);
+        jugadorHost();
+        Thread hilo = new Thread(this);
+        hilo.start();
         
     }
+
     
-        public Lobby(Partida part,Jugador player,String tipo) {
-        initComponents();
-        fondo();
-        jugadorCliente(player);
-        btEnviar.setEnabled(false);
-    }
         
         public void run(){
             try{
                 while(true){
-                    
+            try {
+                Socket jugador = new Socket("127.0.0.1", 27015);
+               ObjectInputStream datoE = new ObjectInputStream(jugador.getInputStream());
+                ObjectOutputStream datoS = new ObjectOutputStream(jugador.getOutputStream());
+                datoS.writeObject("ActualizaPartida");
+                datoS.writeObject(parti.nombre);
+                parti=(Partida)datoE.readObject();
+                jugador.close();
+            } catch (IOException ex) {ex.printStackTrace();}  
+                jugadorHost();
                 }
             }catch(Exception e){e.printStackTrace();}
             
@@ -141,23 +154,18 @@ public class Lobby extends javax.swing.JFrame implements Runnable{
         fondo.validate();
     }
     
-    public void jugadorHost(Jugador player){
-        jLplayer1.setText(player.getNombre());
+    public void jugadorHost(){
+        if(parti.player1!=null)
+            jLplayer1.setText(parti.player1.getNombre());
+        if(parti.player2!=null)
+            jLplayer2.setText(parti.player2.getNombre());
+        if(parti.player3!=null)
+            jLplayer3.setText(parti.player3.getNombre());
+        if(parti.player4!=null)
+            jLplayer4.setText(parti.player4.getNombre());        
     }
     
-    public void jugadorCliente(Jugador player){
-        if(!(jLplayer1.getText().equals("")))
-            jLplayer1.setText(player.getNombre());
-        else
-        if(!(jLplayer2.getText().equals("")))
-            jLplayer2.setText(player.getNombre());
-        else
-        if(!(jLplayer3.getText().equals("")))
-            jLplayer3.setText(player.getNombre());
-        else
-        if(!(jLplayer4.getText().equals("")))
-            jLplayer4.setText(player.getNombre());    
-    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btEnviar;

@@ -19,10 +19,10 @@ import java.net.Socket;
  * @author Ricardo Marcano
  */
 public class Partida extends Thread implements Serializable{
-    public Jugador player1;
-    public Jugador player2;
-    public Jugador player3;
-    public Jugador player4;
+    public Jugador player1=null;
+    public Jugador player2=null;
+    public Jugador player3=null;
+    public Jugador player4=null;
     public int tiempo = 2400;
     public String nombre;
     public int jugadores;
