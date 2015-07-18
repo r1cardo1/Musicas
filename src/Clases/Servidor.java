@@ -36,6 +36,7 @@ import javax.mail.MessagingException;
  */
 public class Servidor implements Runnable {
     
+    ArrayList<String> listaIp;
     Partida parti;
     String opc=null;
     ArrayList<Partida> listaPartidas = new ArrayList<Partida>();
@@ -98,6 +99,10 @@ public class Servidor implements Runnable {
                     if(opc.equals("entrando")){
                         datoS.writeObject(parti);
                     }
+                }
+                
+                if(funcion.equals("cargaPartidas")){
+                    datoS.writeObject(listaPartidas);
                 }
                 cliente.close();
             }

@@ -6,6 +6,13 @@
 package JFrames;
 
 import Clases.Jugador;
+import Clases.Partida;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,13 +21,19 @@ public class Multijugador extends javax.swing.JFrame {
     
     DefaultTableModel modelo;
     Jugador player;
+    ServerSocket servidor;
+    Socket cliente;
+    ArrayList<Partida> listaPartidas = new ArrayList<Partida>();
+    
 
-    public Multijugador(Jugador player) {
+    public Multijugador(Jugador player) throws ClassNotFoundException {
         this.player = player;
         initComponents();
         fondo();
         iniciaTabla();
+        cargarPartidas();
     }
+
 
 
     @SuppressWarnings("unchecked")
@@ -118,6 +131,22 @@ public class Multijugador extends javax.swing.JFrame {
         modelo = new DefaultTableModel(datos,cabecera);
         jTable1.setModel(modelo);
     };
+    
+    public void cargarPartidas() throws ClassNotFoundException{
+        
+        try {
+                Socket jugador = new Socket("127.0.0.1", 27015);
+                ObjectOutputStream datoS = new ObjectOutputStream(jugador.getOutputStream());
+                ObjectInputStream datoE = new ObjectInputStream(jugador.getInputStream());
+                datoS.writeObject("cargaPartidas");
+                listaPartidas = (ArrayList<Partida>)datoE.readObject();
+                jugador.close();
+            } catch (IOException ex) {ex.printStackTrace();}
+        
+        for(int i=1;i<listaPartidas.size();i++){
+            modelo.addRow(new Object[]{listaPartidas.get(i).nombre,listaPartidas.get(i).jugadores});
+        }
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
