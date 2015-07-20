@@ -21,18 +21,27 @@ import javax.swing.JLabel;
  */
 public class Lobby extends javax.swing.JFrame implements Runnable{
     Partida parti;
+    Thread hilo;
 
     public Lobby(Partida part, Jugador player) {
         parti = part;
         initComponents();
         fondo();
         jugadorHost();
-        Thread hilo = new Thread(this);
+        hilo = new Thread(this);
         hilo.start();
         
     }
-
     
+        public Lobby(Partida part, Jugador player,String a) {
+        parti = part;
+        initComponents();
+        fondo();
+        jugadorHost();
+        hilo = new Thread(this);
+        hilo.start();
+        btIniciar.setVisible(false);
+    }
         
         public void run(){
             try{
@@ -49,10 +58,9 @@ public class Lobby extends javax.swing.JFrame implements Runnable{
                 jugadorHost();
                 }
             }catch(Exception e){e.printStackTrace();}
-            
         }
-
-
+        
+        
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -65,7 +73,7 @@ public class Lobby extends javax.swing.JFrame implements Runnable{
         jLplayer3 = new javax.swing.JLabel();
         jLplayer4 = new javax.swing.JLabel();
         btenviar = new javax.swing.JButton();
-        btEnviar = new javax.swing.JButton();
+        btIniciar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(706, 728));
@@ -89,12 +97,12 @@ public class Lobby extends javax.swing.JFrame implements Runnable{
 
         btenviar.setText("Enviar");
 
-        btEnviar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iniciaPartidaN.png"))); // NOI18N
-        btEnviar.setBorder(null);
-        btEnviar.setBorderPainted(false);
-        btEnviar.setContentAreaFilled(false);
-        btEnviar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iniciaPartidaP.png"))); // NOI18N
-        btEnviar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iniciaPartidaF.png"))); // NOI18N
+        btIniciar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iniciaPartidaN.png"))); // NOI18N
+        btIniciar.setBorder(null);
+        btIniciar.setBorderPainted(false);
+        btIniciar.setContentAreaFilled(false);
+        btIniciar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iniciaPartidaP.png"))); // NOI18N
+        btIniciar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iniciaPartidaF.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,7 +125,7 @@ public class Lobby extends javax.swing.JFrame implements Runnable{
                 .addGap(59, 59, 59))
             .addGroup(layout.createSequentialGroup()
                 .addGap(312, 312, 312)
-                .addComponent(btEnviar)
+                .addComponent(btIniciar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -139,7 +147,7 @@ public class Lobby extends javax.swing.JFrame implements Runnable{
                     .addComponent(txtmsj, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btenviar))
                 .addGap(27, 27, 27)
-                .addComponent(btEnviar)
+                .addComponent(btIniciar)
                 .addContainerGap(119, Short.MAX_VALUE))
         );
 
@@ -168,7 +176,7 @@ public class Lobby extends javax.swing.JFrame implements Runnable{
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btEnviar;
+    private javax.swing.JButton btIniciar;
     private javax.swing.JButton btenviar;
     private javax.swing.JLabel jLplayer1;
     private javax.swing.JLabel jLplayer2;

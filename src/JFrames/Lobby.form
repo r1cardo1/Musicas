@@ -47,7 +47,7 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="312" max="-2" attributes="0"/>
-              <Component id="btEnviar" min="-2" max="-2" attributes="0"/>
+              <Component id="btIniciar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -74,7 +74,7 @@
                   <Component id="btenviar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Component id="btEnviar" min="-2" max="-2" attributes="0"/>
+              <Component id="btIniciar" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="119" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -144,7 +144,7 @@
         <Property name="text" type="java.lang.String" value="Enviar"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btEnviar">
+    <Component class="javax.swing.JButton" name="btIniciar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Imagenes/iniciaPartidaN.png"/>

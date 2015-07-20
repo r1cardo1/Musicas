@@ -13,6 +13,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  *
@@ -26,11 +27,32 @@ public class Partida extends Thread implements Serializable{
     public int tiempo = 2400;
     public String nombre;
     public int jugadores;
+    public ArrayList<String> listaIP = new ArrayList<String>();
+    
+    public String mapatext[][] = {{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
+    {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
+    {"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
+    {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
+    {"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
+    {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
+    {"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
+    {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
+    {"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
+    {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
+    {"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
+    {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
+    {"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
+    {"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
+    {"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"}};
     
     public Jugador1 tablero;
     
     public Partida(String nombre){
         this.nombre = nombre;
+    }
+    
+    public Partida(Jugador player,String tipo){
+        player1=player;
     }
 
     public void setPlayer1(Jugador player1) {

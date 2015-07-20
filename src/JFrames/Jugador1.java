@@ -5,25 +5,39 @@
  */
 package JFrames;
 
+import Clases.Bomba;
 import Clases.Jugador;
+import Clases.Partida;
 import javax.swing.JLabel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
     
 /**
  *
  * @author Ricardo Marcano
  */
-public class Jugador1 extends javax.swing.JFrame  implements ActionListener{
+public class Jugador1 extends javax.swing.JFrame{
 
+   
     int ii=0;
     String color;
     public Jugador player;
-    JLabel[][] mapa = new JLabel[15][15];
+    JLabel[][] mapa = new JLabel[15][15];    
+    public Partida parti;
+    public static int estado=0;
+    String[][] paredtxt = new String[15][15];
+    Random md = new Random();
+    JLabel[][] bloques = new JLabel[15][15];
+    public JLabel bomba1=new JLabel();
+    public JLabel bomba2=new JLabel();
+
+     
+
     
     /**
      * Creates new form Jugador1
@@ -34,9 +48,18 @@ public class Jugador1 extends javax.swing.JFrame  implements ActionListener{
     public Jugador1(String nombre, String apellido,String color) {
         this.color = color;
         player = new Jugador(nombre,apellido,44,119,color);
+        parti = new Partida(player,null);
         initComponents();
+        generaBloquestxt();
         cargarjugador();
+        add(bomba1);
+        add(bomba2);
+        generaBloques();
         generarmapa();
+        
+
+        
+        //add(bomba);
 
     }
 
@@ -72,7 +95,13 @@ public class Jugador1 extends javax.swing.JFrame  implements ActionListener{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+
+    
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        
+        if(evt.getKeyCode() == KeyEvent.VK_SPACE)
+            ponerBomba();
         
         if(evt.getKeyCode()== KeyEvent.VK_DOWN){
             
@@ -117,6 +146,23 @@ public class Jugador1 extends javax.swing.JFrame  implements ActionListener{
             
     }//GEN-LAST:event_formKeyPressed
 
+    public void generaBloquestxt(){
+        int x,y,cant;
+        cant=0;
+        
+        while(cant<45){
+            do{
+            x=(int)(Math.random()*12+2);
+            y=(int)(Math.random()*12+2);
+
+            
+            }while(parti.mapatext[y][x].equals("H"));
+
+            paredtxt[y][x] = "B";
+            cant++;  
+        }
+            
+    }
         
     public void generarmapa(){
         JLabel banner = new JLabel();
@@ -127,7 +173,7 @@ public class Jugador1 extends javax.swing.JFrame  implements ActionListener{
         for(int i=0;i<=14;i++)
             for(int j=0;j<=12;j++){
                 mapa[j][i] = new JLabel();
-                mapa[j][i].setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+player.mapatext[j][i]+".png")));
+                mapa[j][i].setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+parti.mapatext[j][i]+".png")));
                 add(mapa[j][i]);
             }
         for(int i=0;i<=14;i++)
@@ -135,6 +181,37 @@ public class Jugador1 extends javax.swing.JFrame  implements ActionListener{
                 mapa[j][i].setBounds(i*43,j*43+86,43,43);
                 mapa[j][i].validate();
             }
+    }
+    
+    public void generaBloques(){
+        
+                for(int i=0;i<=14;i++)
+            for(int j=0;j<=12;j++){
+                if(paredtxt[j][i]!=null)
+                if(paredtxt[j][i].equals("B")){
+                bloques[j][i] = new JLabel();
+                bloques[j][i].setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+paredtxt[j][i]+".png")));
+                add(bloques[j][i]);
+            }
+            }
+        for(int i=0;i<=14;i++)
+            for(int j=0;j<=12;j++){
+                if(paredtxt[j][i]!=null)
+                if(paredtxt[j][i].equals("B")){
+                bloques[j][i].setBounds(i*43,j*43+86,43,43);
+                bloques[j][i].validate();
+            }
+            }
+    }
+    
+    /**
+     *
+     */
+    public void ponerBomba(){
+        bomba1 = new Bomba(player.getX(),player.getY());
+        bomba1.setBounds(player.getX(),player.getY(),43,43);
+        System.out.println(this.getComponentZOrder(bomba1));
+        bomba1.validate();
     }
     
     public void cargarjugador(){
@@ -146,9 +223,6 @@ public class Jugador1 extends javax.swing.JFrame  implements ActionListener{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
     
-    }
-
 }
+

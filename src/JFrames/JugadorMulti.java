@@ -104,7 +104,7 @@ public class JugadorMulti extends javax.swing.JFrame {
         for(int i=0;i<=14;i++)
             for(int j=0;j<=12;j++){
                 mapa[j][i] = new JLabel();
-                mapa[j][i].setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+control.mapatext[j][i]+".png")));
+                mapa[j][i].setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/"+parti.mapatext[j][i]+".png")));
                 add(mapa[j][i]);
             }
         for(int i=0;i<=14;i++)

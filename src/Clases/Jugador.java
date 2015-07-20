@@ -27,24 +27,9 @@ public class Jugador implements Serializable{
     public String clave;
     public String ip;
     
+    public String[][] bloquestxt;
     
-    public String mapatext[][] = {{"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
-    {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
-    {"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
-    {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
-    {"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
-    {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
-    {"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
-    {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
-    {"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
-    {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
-    {"H","S","H","S","H","S","H","S","H","S","H","S","H","S","H"},
-    {"H","S","S","S","S","S","S","S","S","S","S","S","S","S","H"},
-    {"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
-    {"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"},
-    {"H","H","H","H","H","H","H","H","H","H","H","H","H","H","H"}};
-
-    
+ 
 
 
     public Jugador(String nombre, String apellido, int x, int y,String color) {

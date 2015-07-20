@@ -20,6 +20,8 @@ import javax.swing.JLabel;
  */
 public class Juego extends javax.swing.JFrame {
 
+    
+
     /**
      * Creates new form Juego
      */
@@ -34,6 +36,7 @@ public class Juego extends javax.swing.JFrame {
         add(fondo);
         fondo.setBounds(0,0,700,700);
         fondo.validate();
+ 
 
 
         
@@ -72,6 +75,9 @@ public class Juego extends javax.swing.JFrame {
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton1MouseExited(evt);
             }
         });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -212,6 +218,11 @@ public class Juego extends javax.swing.JFrame {
     private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
         new SonidoBotonThread().start();
     }//GEN-LAST:event_jButton2MouseEntered
+
+    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jButton1MouseExited
 
     /**
      * @param args the command line arguments

@@ -30,45 +30,44 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
 
+
 /**
  *
  * @author Ricardo Marcano
  */
 public class Servidor implements Runnable {
     
-    ArrayList<String> listaIp;
+    public static ArrayList<String> listaIp;
     Partida parti;
     String opc=null;
-    ArrayList<Partida> listaPartidas = new ArrayList<Partida>();
-    File datos ;
-    Socket cliente;
+    public static ArrayList<Partida> listaPartidas = new ArrayList<Partida>();
+    File datos;
     Jugador player;
-    ServerSocket servidor;
     ObjectInputStream ois;
     ArrayList<Jugador> usuarios = new ArrayList<Jugador>();
     String funcion;
     String correo;
+    Socket cssocket;
     
-    public Servidor(){
-        Thread hilo = new Thread(this);
-        hilo.start();
+    public Servidor(Socket cliente){
+        this.cssocket = cliente;
     }
     
-    public static void main(String args[]){
-        new Servidor();
-    }
+    public static void main(String args[])throws Exception{
+            
+      ServerSocket ssock = new ServerSocket(27015);
+      while (true) {
+         Socket sock = ssock.accept();
+         new Thread(new Servidor(sock)).start();
+         
+      }
+   }
     
-    
-
     @Override
     public void run() {        
-        try{
-        servidor = new ServerSocket(27015);
-
-            while(true){
-                cliente=servidor.accept();
-                ObjectOutputStream datoS = new ObjectOutputStream(cliente.getOutputStream());
-                ObjectInputStream datoE = new ObjectInputStream(cliente.getInputStream());
+        try{            
+                ObjectOutputStream datoS = new ObjectOutputStream(cssocket.getOutputStream());
+                ObjectInputStream datoE = new ObjectInputStream(cssocket.getInputStream());
                 funcion =(String)datoE.readObject();
                 System.out.println(funcion);
                 if(funcion.equals("recuerdaClave")){
@@ -103,6 +102,8 @@ public class Servidor implements Runnable {
                 }
                 
                 if(funcion.equals("cargaPartidas")){
+                    for(int i=0;i<listaPartidas.size();i++)
+                        System.out.println(listaPartidas.get(i).nombre);
                     datoS.writeObject(listaPartidas);
                 }
                 
@@ -124,8 +125,8 @@ public class Servidor implements Runnable {
                         opc="";
                     }                    
                 }
-                cliente.close();
-            }
+                cssocket.close();
+            
         }catch(ClassNotFoundException | MessagingException e){e.printStackTrace();} catch (IOException ex) {ex.printStackTrace();} 
         }
    
@@ -180,8 +181,6 @@ public class Servidor implements Runnable {
     FileOutputStream fos = null;
     ObjectOutputStream escribirObjeto = null;
         ArrayList<Jugador> lista = new ArrayList<Jugador>();
-    
-    
     try{
 
         FileInputStream fis = new FileInputStream(f);
@@ -197,7 +196,6 @@ public class Servidor implements Runnable {
         escribirObjeto.close();        
     }
     catch( Exception e ){System.out.println(e); }
-
     }
     
     public void recordarClave(String correo) throws FileNotFoundException, IOException, ClassNotFoundException, MessagingException{
@@ -278,7 +276,6 @@ public class Servidor implements Runnable {
     
     public void unirsePartida(String nombre, Jugador player) throws IOException {
         
-
         for(int i=0;i<listaPartidas.size();i++){
             if(listaPartidas.get(i).getNombre().equals(nombre)){
                 if(listaPartidas.get(i).jugadores<4){
@@ -317,13 +314,11 @@ public class Servidor implements Runnable {
     
     public Partida buscaPartida(String nombre){
         Partida parti=null;
-        
         for(int i = 0; i<listaPartidas.size();i++){
             if(listaPartidas.get(i).nombre.equals(nombre)){
                 parti = listaPartidas.get(i);
             }
         }
-        
         return parti;
     }
 }

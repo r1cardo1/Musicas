@@ -147,7 +147,7 @@ public class Multijugador extends javax.swing.JFrame {
                 opc = (String)datoE.readObject();
                 if(opc.equals("entrando")){
                        parti = (Partida)datoE.readObject();
-                       new Lobby(parti,player).setVisible(true);
+                       new Lobby(parti,player,"a").setVisible(true);
                        dispose();
                    }
                 jugador.close();                
@@ -172,19 +172,19 @@ public class Multijugador extends javax.swing.JFrame {
     }
     
     public void cargarPartidas() throws ClassNotFoundException{
-        
         try {
                 Socket jugador = new Socket("127.0.0.1", 27015);
                 ObjectOutputStream datoS = new ObjectOutputStream(jugador.getOutputStream());
                 ObjectInputStream datoE = new ObjectInputStream(jugador.getInputStream());
                 datoS.writeObject("cargaPartidas");
+                System.out.println("cargando");
                 listaPartidas = (ArrayList<Partida>)datoE.readObject();
-                
+                System.out.println("cargado");
                 jugador.close();
             } catch (IOException ex) {ex.printStackTrace();}
-        
         for(int i=0;i<listaPartidas.size();i++){
             String v[] ={listaPartidas.get(i).nombre,Integer.toString(listaPartidas.get(i).jugadores)};
+            System.out.println(v[0]+" "+v[1]);
             modelo.addRow(v);
         }
     }
